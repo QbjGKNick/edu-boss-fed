@@ -55,6 +55,11 @@ const routes: Array<RouteConfig> = [
     path: '/user',
     name: 'user',
     component: () => import(/* webpackChunkName: 'user' */'@/views/user/index.vue')
+  },
+  {
+    path: '*',
+    name: '404',
+    component: () => import(/* webpackChunkName: '404' */'@/views/error-page/404.vue')
   }
 ]
 
