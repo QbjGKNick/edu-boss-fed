@@ -16,62 +16,44 @@ const routes: Array<RouteConfig> = [
   {
     path: '/',
     component: Layout,
+    meta: {
+      requiresAuth: true // 自定义数据
+    }, // meta 默认就是一个空对象
     children: [
       {
         path: '', // 默认子路由
         name: 'home',
-        component: () => import(/* webpackChunkName: 'home' */'@/views/home/index.vue'),
-        meta: {
-          requiresAuth: true // 自定义数据
-        } // meta 默认就是一个空对象
+        component: () => import(/* webpackChunkName: 'home' */'@/views/home/index.vue')
       },
       {
         path: '/course',
         name: 'course',
-        component: () => import(/* webpackChunkName: 'course' */'@/views/course/index.vue'),
-        meta: {
-          requiresAuth: true
-        }
+        component: () => import(/* webpackChunkName: 'course' */'@/views/course/index.vue')
       },
       {
         path: '/menu',
         name: 'menu',
-        component: () => import(/* webpackChunkName: 'menu' */'@/views/menu/index.vue'),
-        meta: {
-          requiresAuth: true
-        }
+        component: () => import(/* webpackChunkName: 'menu' */'@/views/menu/index.vue')
       },
       {
         path: '/resource',
         name: 'resource',
-        component: () => import(/* webpackChunkName: 'resource' */'@/views/resource/index.vue'),
-        meta: {
-          requiresAuth: true
-        }
+        component: () => import(/* webpackChunkName: 'resource' */'@/views/resource/index.vue')
       },
       {
         path: '/role',
         name: 'role',
-        component: () => import(/* webpackChunkName: 'role' */'@/views/role/index.vue'),
-        meta: {
-          requiresAuth: true
-        }
+        component: () => import(/* webpackChunkName: 'role' */'@/views/role/index.vue')
       },
       {
         path: '/user',
         name: 'user',
-        component: () => import(/* webpackChunkName: 'user' */'@/views/user/index.vue'),
-        meta: {
-          requiresAuth: true
-        }
+        component: () => import(/* webpackChunkName: 'user' */'@/views/user/index.vue')
       },
       {
         path: '/advert',
         name: 'advert',
-        component: () => import(/* webpackChunkName: 'advert' */'@/views/advert/index.vue'),
-        meta: {
-          requiresAuth: true
-        }
+        component: () => import(/* webpackChunkName: 'advert' */'@/views/advert/index.vue')
       },
       {
         path: '/advert-space',
@@ -101,7 +83,10 @@ router.beforeEach((to, from, next) => {
     if (!store.state.user) {
       // 跳转登录页面
       next({
-        name: 'login'
+        name: 'login',
+        query: { // 通过 url 传递查询参数
+          redirect: to.fullPath
+        }
       })
     } else {
       next() // 允许通过
