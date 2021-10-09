@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { Form } from 'element-ui'
+import { Form, Message } from 'element-ui'
 import { login } from '@/services/user'
 
 export default Vue.extend({
@@ -49,10 +49,10 @@ export default Vue.extend({
     }
   },
   methods: {
-    async onSubmit () {
+    async onSubmit() {
       try {
         // 1. 表单验证
-        await (this.$refs.form as Form).validate()
+        await (this.$refs.form as any).validate()
 
         // 登录按钮 loading
         this.isLoginLoading = true
@@ -71,7 +71,7 @@ export default Vue.extend({
         const { state, message } = data
         //    失败：给出提示
         if (state !== 1) {
-          this.$message.error(message)
+          Message.error(message)
         }
         // 1. 成功：跳转首页，记录登录状态，状态需要能够全局访问（放到 vuex 中）
         this.$store.commit('setUser', data.content)
@@ -80,7 +80,7 @@ export default Vue.extend({
         //   name: 'home'
         // })
         this.$router.push(this.$route.query.redirect as string || '/')
-        this.$message.success('登录成功！')
+        Message.success('登录成功！')
       } catch (error) {
         console.log('登录失败！', error)
       }
