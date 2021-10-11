@@ -27,7 +27,7 @@ export const login = (data: User) => {
 
 export const getUserInfo = () => {
   return request({
-    method: 'POST',
+    method: 'GET',
     url: '/front/user/getInfo'
     // headers: {
     //   Authorization: store.state.user.access_token
