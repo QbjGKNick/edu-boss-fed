@@ -55,7 +55,12 @@ export default Vue.extend({
       }
     },
     handleEdit(row: any) {
-      console.log('edit', row)
+      this.$router.push({
+        name: 'menu-edit',
+        params: {
+          id: row.id
+        }
+      })
     },
     handleDelete(row: any) {
       this.$confirm('确认删除吗？', '删除提示', {})
