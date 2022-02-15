@@ -95,7 +95,7 @@ router.beforeEach((to, from, next) => {
       next({
         name: 'login',
         query: { // 通过 url 传递查询参数
-          redirect: to.fullPath
+          redirect: to.fullPath || '/'
         }
       })
     } else {

@@ -17,13 +17,13 @@
           </el-form-item>
         </el-form>
       </div>
-      <el-table :data="tableData" style="width: 100%">
-        <el-table-column prop="date" type="index" label="编号">
+      <el-table :data="resources" style="width: 100%">
+        <el-table-column type="index" label="编号" width="100">
         </el-table-column>
-        <el-table-column prop="name" label="菜单名称"> </el-table-column>
-        <el-table-column prop="level" label="菜单级数"> </el-table-column>
-        <el-table-column prop="icon" label="前端图标"> </el-table-column>
-        <el-table-column prop="orderNum" label="排序"> </el-table-column>
+        <el-table-column prop="name" label="资源名称"> </el-table-column>
+        <el-table-column prop="url" label="资源路径"> </el-table-column>
+        <el-table-column prop="description" label="描述"> </el-table-column>
+        <el-table-column prop="createdTime" label="添加时间"> </el-table-column>
         <el-table-column prop="address" label="操作" min-width="150">
           <template slot-scope="scope">
             <el-button size="mini" @click="handleEdit(scope.row)"
@@ -38,6 +38,15 @@
           </template>
         </el-table-column>
       </el-table>
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="currentPage4"
+        :page-sizes="[100, 200, 300, 400]"
+        :page-size="100"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total">
+      </el-pagination>
     </el-card>
   </div>
 </template>
@@ -50,11 +59,16 @@ export default Vue.extend({
   name: 'ResourceList',
   data() {
     return {
-      tableData: [],
+      resources: [], // 资源列表
       formInline: {
         user: '',
         region: ''
-      }
+      },
+      total: 0,
+      currentPage1: 5,
+      currentPage2: 5,
+      currentPage3: 5,
+      currentPage4: 4
     }
   },
   created() {
@@ -62,8 +76,16 @@ export default Vue.extend({
   },
   methods: {
     async loadResources() {
-      const { data } = await getResourcePages({})
-      console.log(data)
+      const { data: resourcesData } = await getResourcePages({
+        // 查询条件
+        current: this.resources.aaaaa                                                                                               m.current, // 分页页码
+        size: this.form.size = data.records
+      })
+      const { code, data } = resourcesData
+      if (code === '000000') {
+        this.resources = data.records
+        console.log(data)
+      }
     },
 
     onSubmit() {
@@ -76,6 +98,13 @@ export default Vue.extend({
 
     handleDelete(row: any) {
       console.log(row)
+    },
+
+    handleSizeChange(val: number) {
+      console.log(`每页 ${val} 条`)
+    },
+    handleCurrentChange(val: number) {
+      console.log(`当前页: ${val}`)
     }
   }
 })

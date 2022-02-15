@@ -5,10 +5,8 @@ declare module '*.vue' {
 
 declare module 'element-ui'
 
-declare module 'Form' {
-  class Form {
-
+declare module 'vue' {
+  export interface GlobalComponents {
+    Form: typeof import('element-ui')['Form']
   }
-
-  export = Form
 }

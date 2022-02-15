@@ -52,7 +52,7 @@ export default Vue.extend({
     async onSubmit() {
       try {
         // 1. 表单验证
-        await (this.$refs.form as any).validate()
+        await this.$refs.form.validate()
 
         // 登录按钮 loading
         this.isLoginLoading = true
